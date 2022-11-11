@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Советник для Avito",
+  "version": "1.0.0",
+  "description": "Помогает выгоднее купить и продать благодаря анализу цены объявлений на странице",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.avito.ru/*",
+        "https://*.avito.ru/*",
+        "https://www.google.ru/"
+      ],
+      "run_at": "document_idle",
+      "js": ["app.js"]
+    }
+  ]
+}
