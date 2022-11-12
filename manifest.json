@@ -5,13 +5,15 @@
   "description": "Помогает выгоднее купить и продать благодаря анализу цены объявлений на странице",
   "content_scripts": [
     {
-      "matches": [
-        "https://www.avito.ru/*",
-        "https://*.avito.ru/*",
-        "https://www.google.ru/"
-      ],
+      "matches": ["https://www.avito.ru/*", "https://*.avito.ru/*"],
       "run_at": "document_idle",
       "js": ["app.js"]
     }
-  ]
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
 }

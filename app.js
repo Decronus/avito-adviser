@@ -13,8 +13,6 @@ const mainFunc = () => {
       if (el <= minimum) {
         minimum = el;
         minValueIndex = array.indexOf(el);
-        console.log(minValueIndex);
-        console.log("minimum", minimum);
       }
     }
     return minimum;
@@ -30,7 +28,6 @@ const mainFunc = () => {
       if (el >= maximum) {
         maximum = el;
         maxValueIndex = array.indexOf(el);
-        console.log("maximum", maximum);
       }
     }
     return maximum;
@@ -45,11 +42,8 @@ const mainFunc = () => {
         continue;
       }
       sum += el;
-      console.log(sum);
-      console.log(array.length);
     }
     const average = Math.floor(sum / (array.length - notNumber));
-    console.log(average);
     return average;
   };
 
@@ -63,16 +57,13 @@ const mainFunc = () => {
       }
     }
 
-    console.log("sorted", sortedPricesArray);
     let median = 0;
     if (sortedPricesArray.length % 2 === 0) {
       median =
         sortedPricesArray[sortedPricesArray.length / 2 - 1] / 2 +
         sortedPricesArray[sortedPricesArray.length / 2] / 2;
-      console.log("1 if", median);
     } else {
       median = sortedPricesArray[(sortedPricesArray.length - 1) / 2 - 1];
-      console.log("2 if", median);
     }
 
     console.log(median);
@@ -83,8 +74,6 @@ const mainFunc = () => {
 
   const heading = document.createElement("h1");
   heading.textContent = "Заголовок";
-
-  const headings = document.querySelectorAll(".title-root-zZCwT");
 
   const pluginWrap = document.createElement("div");
   pluginWrap.style.maxWidth = "980px";
@@ -109,7 +98,6 @@ const mainFunc = () => {
   pluginHeader.textContent = queryTextContent;
 
   const cards = document.querySelectorAll(".iva-item-root-_lk9K");
-  console.log("cards", cards);
 
   const pricesArray = [];
   const linksArray = [];
@@ -117,12 +105,10 @@ const mainFunc = () => {
     priceElement = el.querySelector(".price-text-_YGDY");
     let price = Number(priceElement.textContent.replace(/[^0-9]/g, ""));
     pricesArray.push(price);
-    console.log(price);
 
     linkElement = el.querySelector(".link-link-MbQDP");
     const link = linkElement.getAttribute("href");
     linksArray.push(link);
-    console.log(link);
   });
 
   const pricesMainWrap = document.createElement("div");
