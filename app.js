@@ -1,8 +1,15 @@
 const mainFunc = () => {
   let minValueIndex = 0;
   const minValue = (array) => {
-    let minimum = array[0];
+    let minimum;
     for (let el of array) {
+      if (el !== 0) {
+        minimum = el;
+        break;
+      }
+    }
+    for (let el of array) {
+      if (el === 0) continue;
       if (el <= minimum) {
         minimum = el;
         minValueIndex = array.indexOf(el);
@@ -12,6 +19,7 @@ const mainFunc = () => {
     }
     return minimum;
   };
+
   let maxValueIndex = 0;
   const maxValue = (array) => {
     let maximum = array[0];
@@ -43,6 +51,32 @@ const mainFunc = () => {
     const average = Math.floor(sum / (array.length - notNumber));
     console.log(average);
     return average;
+  };
+
+  let sortedPricesArray;
+  const medianValue = (array) => {
+    console.log("array", array);
+    sortedPricesArray = array.sort((a, b) => a - b);
+    for (let el of sortedPricesArray) {
+      if (String(el) === "NaN") {
+        array.pop(el);
+      }
+    }
+
+    console.log("sorted", sortedPricesArray);
+    let median = 0;
+    if (sortedPricesArray.length % 2 === 0) {
+      median =
+        sortedPricesArray[sortedPricesArray.length / 2 - 1] / 2 +
+        sortedPricesArray[sortedPricesArray.length / 2] / 2;
+      console.log("1 if", median);
+    } else {
+      median = sortedPricesArray[(sortedPricesArray.length - 1) / 2 - 1];
+      console.log("2 if", median);
+    }
+
+    console.log(median);
+    return median;
   };
 
   const main = document.querySelector(".index-content-_KxNP");
@@ -81,9 +115,7 @@ const mainFunc = () => {
   const linksArray = [];
   cards.forEach((el) => {
     priceElement = el.querySelector(".price-text-_YGDY");
-    const price = Number(
-      priceElement.textContent.slice(0, -2).replace(/\s/g, "")
-    );
+    let price = Number(priceElement.textContent.replace(/[^0-9]/g, ""));
     pricesArray.push(price);
     console.log(price);
 
@@ -128,30 +160,30 @@ const mainFunc = () => {
   description.style.letterSpacing = "1px";
   description.textContent = "MIN цена";
 
-  const minPriceLink = document.createElement("a");
-  minPriceLink.textContent = "Ссылка на товар";
-  minPriceLink.style.color = "white";
-  minPriceLink.style.fontSize = "14px";
-  minPriceLink.setAttribute("href", linksArray[minValueIndex]);
+  //   const minPriceLink = document.createElement("a");
+  //   minPriceLink.textContent = "Ссылка на товар";
+  //   minPriceLink.style.color = "white";
+  //   minPriceLink.style.fontSize = "14px";
+  //   minPriceLink.setAttribute("href", linksArray[minValueIndex]);
 
   pluginWrap.append(pluginHeader);
   pluginWrap.append(pricesMainWrap);
 
   pricesMainWrap.append(minPriceMainWrap);
   minPriceMainWrap.append(minPriceContainer);
-  minPriceMainWrap.append(minPriceLink);
+  //   minPriceMainWrap.append(minPriceLink);
   minPriceContainer.append(minPrice);
   minPriceContainer.append(description);
 
-  //Блок средней цены
+  //Блок медианной цены
   const averagePriceMainWrap = minPriceMainWrap.cloneNode(true);
   const averageDescription = averagePriceMainWrap.getElementsByTagName("p");
-  averageDescription[0].textContent = "Средняя цена";
+  averageDescription[0].textContent = "Медианная цена";
   const averagePrice = averagePriceMainWrap.getElementsByTagName("h3");
-  averagePrice[0].textContent = averageValue(pricesArray) + " ₽";
+  averagePrice[0].textContent = medianValue(pricesArray) + " ₽";
   averagePrice[0].style.color = "#A5992E";
   const averageLink = averagePriceMainWrap.getElementsByTagName("a");
-  averageLink[0].remove();
+  //   averageLink[0].remove();
   pricesMainWrap.append(averagePriceMainWrap);
 
   //Блок максимальной цены
@@ -161,9 +193,15 @@ const mainFunc = () => {
   const maxPrice = maxPriceMainWrap.getElementsByTagName("h3");
   maxPrice[0].style.color = "#AE5454";
   maxPrice[0].textContent = maxValue(pricesArray) + " ₽";
-  const maxLink = maxPriceMainWrap.getElementsByTagName("a");
-  maxLink[0].setAttribute("href", linksArray[maxValueIndex]);
+  //   const maxLink = maxPriceMainWrap.getElementsByTagName("a");
+  //   maxLink[0].setAttribute("href", linksArray[maxValueIndex]);
   pricesMainWrap.append(maxPriceMainWrap);
+
+  const info = document.createElement("p");
+  info.style.fontSize = "10px";
+  info.style.opacity = 0.65;
+  info.textContent = `Информация на основе анализа ${sortedPricesArray.length} объявлений на этой странице`;
+  pluginWrap.append(info);
 
   main.prepend(pluginWrap);
 };
